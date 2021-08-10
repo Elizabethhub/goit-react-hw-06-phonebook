@@ -20,7 +20,7 @@ export const fetchContacts = () => async (dispatch) => {
     const { data } = await axios.get("/contacts.json");
     dispatch(getContactSuccess(Object.keys(data).map((key) => ({ id: key, ...data[key] }))));
   } catch (error) {
-    dispatch(getContactError(error));
+    dispatch(getContactError(error.message));
   }
 };
 export const addContact = (contact) => async (dispatch) => {
@@ -29,7 +29,7 @@ export const addContact = (contact) => async (dispatch) => {
     const { data } = await axios.post("/contacts.json", contact);
     dispatch(addContactSuccess({ id: data.name, ...contact }));
   } catch (error) {
-    dispatch(addContactError(error));
+    dispatch(addContactError(error.message));
   }
 };
 
@@ -40,6 +40,6 @@ export const deleteContact = (id) => async (dispatch) => {
     await axios.delete(`/contacts/${id}.json`);
     dispatch(deleteContactSuccess(id));
   } catch (error) {
-    dispatch(deleteContactError(error));
+    dispatch(deleteContactError(error.message));
   }
 };
